@@ -10,15 +10,16 @@ function App() {
 
     const [query, setQuery] = useState('');
     const [tempo, setTempo] = useState({});
+    
 
     const pesquisa = evt => {
       if(evt.key === "Enter"){
         //fetch(`${api.base}weather?q=${query}$units=metric$APPID=${api.key}`)
-        fetch( `http://api.openweathermap.org/data/2.5/weather?q=${query}&appid=609534aa35617a0992ed124181158475`)
+        fetch( `http://api.openweathermap.org/data/2.5/weather?q=${query},br&lang=pt_br&appid=609534aa35617a0992ed124181158475`)
     .then(res => res.json()).then(resultado => {
       setTempo(resultado)
       setQuery('')
-    console.log(tempo)
+
         })
       }
     }
@@ -35,9 +36,10 @@ function App() {
 
     return `${dia} ${data} ${mes} ${ano}`
     }
-
-    let celsius = (tempo.main.temp -  273,15)
-
+    
+   
+   
+   
   return (
     <div className="App">
       <main>
@@ -48,6 +50,7 @@ function App() {
          onKeyPress ={pesquisa}/>
        </div>
        <div>
+
          {(typeof tempo.main != "undefined") ? (
           <div>
         <div className="caixa-localizacao">
@@ -55,8 +58,8 @@ function App() {
           <div className="data">{datasCal(new Date())}</div>
         </div>
         <div className="caixa-tempo">
-          <div className="temperatura">{Math.round(celsius)}</div>
-          <div className="tempo"> Ensolarado</div>
+          <div className="temperatura">{Math.round(tempo.main.temp - 273)}</div>
+          <div className="tempo"> {tempo.weather.description}</div>
         </div>
         </div>
   ):('')}
